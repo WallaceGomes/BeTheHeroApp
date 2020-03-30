@@ -1,4 +1,6 @@
 const express = require('express');
+const crypto = require('crypto'); //pacote do node default
+const connection = require('./database/connection');
 
 const routes = express.Router();
 
@@ -20,12 +22,28 @@ const routes = express.Router();
 
 */
 
+routes.get('/ongs', async (request, response) => {
+    const ongs = await connection('ongs').select('*');
 
-routes.get('/', (req, res) => {
-    return res.json({
-        nome: 'Wallace',
-        estudando: 'ReactJS'
+    return response.json(ongs);
+});
+
+routes.post('/ongs', async(request, response) => {
+    const { name, email, whatsapp, city, uf } = request.body;
+
+    //id random
+    const id = crypto.randomBytes(4).toString('HEX');
+
+    await connection('ongs').insert({
+        id,
+        name,
+        email,
+        whatsapp,
+        city,
+        uf,
     });
+
+    return response.json({ id });
 });
 
 module.exports = routes;
