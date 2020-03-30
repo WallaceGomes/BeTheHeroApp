@@ -1,12 +1,17 @@
 // Update with your config settings.
-
+// Arquivo de configuração do DB. Alterar com o banco que for usar
 module.exports = {
 
+  
   development: {
     client: 'sqlite3',
     connection: {
       filename: './src/database/db.sqlite'
-    }
+    },
+    migrations: {
+      directory: './src/database/migrations'
+    },
+    useNullAsDefault: true,
   },
 
   staging: {
