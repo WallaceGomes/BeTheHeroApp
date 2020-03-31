@@ -10,10 +10,19 @@ module.exports = {
         //retorna a quantidade de casos no BD
         const [count] = await connection('incidents').count();
 
+        //retorna todas as informações dos incidents com as da ong responsável
         const incidents = await connection('incidents')
+            .join('ongs', 'ongs.id', '=', 'incidents.ong_id')
             .limit(5)
             .offset((page -1 ) * 5)
-            .select('*');
+            .select([
+                'incidents.*',
+                'ongs.name',
+                'ongs.email',
+                'ongs.whatsapp',
+                'ongs.city',
+                'ongs.uf'
+            ]); // parei faltando 8min
     
         //retorna a quantidade de itens na tabela incidents
         response.header('X-Total-Count', count['count(*)']);
