@@ -2,9 +2,22 @@ const connection = require('../database/connection');
 
 module.exports = {
 
+    //paginação: caso não tenha na no query, seta a page como 1
+    //carrega somente 5 casos por página
+    //offset => pula uma quantidade definida de itens
     async listIncidents(request, response){
-        const incidents = await connection('incidents').select('*');
+        const { page = 1 } = request.query;
+        //retorna a quantidade de casos no BD
+        const [count] = await connection('incidents').count();
+
+        const incidents = await connection('incidents')
+            .limit(5)
+            .offset((page -1 ) * 5)
+            .select('*');
     
+        //retorna a quantidade de itens na tabela incidents
+        response.header('X-Total-Count', count['count(*)']);
+
         return response.json(incidents);
     },
 
