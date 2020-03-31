@@ -3,6 +3,7 @@ const express = require('express');
 const OngController = require('./controllers/OngController');
 const IncidentController = require('./controllers/IncidentController');
 const ProfileController = require('./controllers/ProfileController');
+const SessionController = require('./controllers/SessionController');
 
 const routes = express.Router();
 
@@ -23,6 +24,8 @@ const routes = express.Router();
     Será utilizado como Query Builder o KNEX (npm)
 
 */
+
+routes.post('/sessions', SessionController.create)
 
 routes.get('/ongs', OngController.listOngs);
 
