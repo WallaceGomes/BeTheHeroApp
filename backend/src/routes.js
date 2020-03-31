@@ -1,7 +1,8 @@
 const express = require('express');
-const connection = require('./database/connection');
 
 const OngController = require('./controllers/OngController');
+const IncidentController = require('./controllers/IncidentController');
+const ProfileController = require('./controllers/ProfileController');
 
 const routes = express.Router();
 
@@ -26,5 +27,12 @@ const routes = express.Router();
 routes.get('/ongs', OngController.listOngs);
 
 routes.post('/ongs', OngController.create);
+
+
+routes.get('/profile', ProfileController.listOngIncidents);
+
+routes.post('/incidents', IncidentController.create);
+routes.get('/incidents', IncidentController.listIncidents);
+routes.delete('/incidents/:id', IncidentController.delete);
 
 module.exports = routes;
