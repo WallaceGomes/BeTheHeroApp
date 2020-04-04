@@ -5,12 +5,14 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 //Se não usar consegue renderizar todas as rotas
 
 import Logon from './pages/Logon';
+import Resgister from './pages/Register';
 
 export default function Routes() {
     return (
         <BrowserRouter>
             <Switch>
-                <Route path= "/" component={Logon} />
+                <Route path= "/" exact component={Logon} />
+                <Route path= "/register" component={Resgister} />
             </Switch>
         </BrowserRouter>
     );
